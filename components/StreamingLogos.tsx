@@ -47,8 +47,7 @@ function ServiceCard({ service }: { service: Service }) {
   return (
     <div
       className="stream-logo-card flex-shrink-0 w-40 h-24 rounded-2xl flex flex-col items-center justify-center overflow-hidden"
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      style={{ "--service-bg": service.bg } as any}
+      style={{ "--service-bg": service.bg } as React.CSSProperties}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img

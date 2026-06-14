@@ -1,0 +1,174 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* ─── Theme CSS variables (dark = default, light = opt-in) ──────────────────── */
+
+:root {
+  --color-bg:           7 7 15;
+  --color-surface:      15 15 26;
+  --color-surface-2:    22 22 42;
+  --color-border:       30 30 58;
+  --color-text-primary: 241 245 249;
+  --color-text-secondary: 148 163 184;
+  --color-text-muted:   71 85 105;
+}
+
+html.light {
+  --color-bg:           248 250 252;
+  --color-surface:      255 255 255;
+  --color-surface-2:    241 245 249;
+  --color-border:       226 232 240;
+  --color-text-primary: 15 23 42;
+  --color-text-secondary: 71 85 105;
+  --color-text-muted:   148 163 184;
+}
+
+/* Light-mode overrides for hardcoded dark hex colours in components */
+html.light header {
+  background-color: rgba(255 255 255 / 0.85) !important;
+  border-color: #e2e8f0 !important;
+}
+
+html.light .logo-card,
+html.light .stream-logo-card {
+  box-shadow: 0 2px 12px rgba(0 0 0 / 0.08);
+}
+
+html.light section {
+  color: rgb(var(--color-text-primary));
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: rgb(var(--color-bg));
+    color: rgb(var(--color-text-primary));
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  ::selection {
+    background-color: rgba(168, 85, 247, 0.3);
+    color: #f1f5f9;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(135deg, #a855f7 0%, #22d3ee 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-pink {
+    background: linear-gradient(135deg, #e879f9 0%, #a855f7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .border-gradient {
+    border: 1px solid transparent;
+    background-clip: padding-box;
+    position: relative;
+  }
+
+  .glow-purple {
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.4), 0 0 60px rgba(168, 85, 247, 0.1);
+  }
+
+  .glow-cyan {
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.4), 0 0 60px rgba(34, 211, 238, 0.1);
+  }
+
+  .card-border {
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ─── Sports marquee ─────────────────────────────────────────────────────── */
+
+@keyframes logo-scroll-right {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.logo-scroll {
+  animation: logo-scroll-right 32s linear infinite;
+}
+
+.logo-scroll-reverse {
+  animation-direction: reverse;
+}
+
+.scroll-container-sports {
+  mask: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+.logo-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+  user-select: none;
+}
+
+.logo-card:hover {
+  transform: scale(1.07);
+  box-shadow: 0 0 28px rgba(130, 244, 19, 0.3);
+  outline: 1.5px solid rgba(130, 244, 19, 0.6);
+}
+
+/* ─── Streaming logos marquee ────────────────────────────────────────────── */
+
+@keyframes stream-scroll-right {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.stream-scroll {
+  animation: stream-scroll-right 28s linear infinite;
+}
+
+.stream-scroll-reverse {
+  animation-direction: reverse;
+}
+
+.scroll-container-stream {
+  -webkit-mask: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+  mask: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+.stream-logo-card {
+  background: var(--service-bg, #1a1a2e);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.stream-logo-card:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 24px rgba(34, 211, 238, 0.3);
+  outline: 1.5px solid rgba(34, 211, 238, 0.5);
+}

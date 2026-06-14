@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 90">
+  <!-- Play triangle -->
+  <polygon points="72,20 72,70 105,45" fill="#E20078"/>
+  <text x="120" y="58" font-family="'Arial', sans-serif" font-size="18" font-weight="800" fill="#E20078" text-anchor="middle" letter-spacing="-0.5">land</text>
+</svg>

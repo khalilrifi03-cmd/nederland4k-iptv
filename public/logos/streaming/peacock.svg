@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 90">
+  <!-- Peacock feather shapes -->
+  <polygon points="100,20 95,55 100,60 105,55" fill="#E8003D"/>
+  <polygon points="100,20 88,52 93,58 100,60" fill="#F47B20"/>
+  <polygon points="100,20 82,46 87,53 93,58" fill="#FBCD00"/>
+  <polygon points="100,20 112,52 107,58 100,60" fill="#0A65B2"/>
+  <polygon points="100,20 118,46 113,53 107,58" fill="#00A651"/>
+  <text x="100" y="82" font-family="'Arial', sans-serif" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="1">PEACOCK</text>
+</svg>

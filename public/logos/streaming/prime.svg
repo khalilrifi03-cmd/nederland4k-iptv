@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 90">
+  <text x="100" y="38" font-family="'Arial', sans-serif" font-size="26" font-weight="800" fill="#00A8E0" text-anchor="middle" letter-spacing="2">prime</text>
+  <text x="100" y="60" font-family="'Arial', sans-serif" font-size="18" font-weight="400" fill="#ffffff" text-anchor="middle" letter-spacing="3">video</text>
+  <path d="M68 70 Q100 82 132 70" stroke="#FF9900" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <polygon points="132,66 137,72 130,73" fill="#FF9900"/>
+</svg>

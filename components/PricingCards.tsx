@@ -2,26 +2,35 @@
 
 import Link from "next/link";
 import { useTranslations } from "@/lib/i18n";
+import { paymentIcons } from "@/components/PaymentIcons";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 interface PricingPlan {
   id: string;
   durationKey: "m1" | "m3" | "m6" | "y1" | "y2";
-  price: number;
+  price: number;          // actuele (afgeprijsde) prijs
+  originalPrice: number;  // doorgestreepte oude prijs (urgentie)
   savingsKey?: "s18" | "s39" | "mostChosen" | "bestDeal";
   popular?: boolean;
+  checkoutUrl?: string;   // externe betaallink (bv. Hotmart); leeg = naar /inloggen
 }
 
-// ─── Plans (prices never change) ─────────────────────────────────────────────
+// ─── Plans ───────────────────────────────────────────────────────────────────
 
 const plans: PricingPlan[] = [
-  { id: "maand",     durationKey: "m1", price: 8.99  },
-  { id: "kwartaal",  durationKey: "m3", price: 21.99, savingsKey: "s18"        },
-  { id: "half-jaar", durationKey: "m6", price: 32.99, savingsKey: "s39"        },
-  { id: "jaar",      durationKey: "y1", price: 54.99, savingsKey: "mostChosen", popular: true },
-  { id: "twee-jaar", durationKey: "y2", price: 99.99, savingsKey: "bestDeal"   },
+  { id: "maand",     durationKey: "m1", price: 8.99,  originalPrice: 17.99,                            checkoutUrl: "https://pay.hotmart.com/N106416620X?off=ye7o5u6n" },
+  { id: "kwartaal",  durationKey: "m3", price: 21.99, originalPrice: 39.99,  savingsKey: "s18",         checkoutUrl: "https://pay.hotmart.com/N106416620X?off=ud6w3bu8" },
+  { id: "half-jaar", durationKey: "m6", price: 32.99, originalPrice: 64.99,  savingsKey: "s39",         checkoutUrl: "https://pay.hotmart.com/N106416620X?off=td9dhdls" },
+  { id: "jaar",      durationKey: "y1", price: 54.99, originalPrice: 109.99, savingsKey: "mostChosen", popular: true, checkoutUrl: "https://pay.hotmart.com/N106416620X?off=hhkdbls5" },
+  { id: "twee-jaar", durationKey: "y2", price: 99.99, originalPrice: 199.99, savingsKey: "bestDeal",     checkoutUrl: "https://pay.hotmart.com/N106416620X?off=nt7b0jub" },
 ];
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+const formatPrice = (n: number) => `€${n.toFixed(2).replace(".", ",")}`;
+const discountPct = (price: number, original: number) =>
+  Math.round((1 - price / original) * 100);
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
@@ -102,15 +111,27 @@ export default function PricingCards() {
                     <span className={`text-xs font-semibold uppercase tracking-widest ${isPopular ? "text-black/60" : "text-[#94a3b8]"}`}>
                       {duration}
                     </span>
-                    {savings && !isPopular && (
+                    {/* Alleen kwalitatieve labels tonen — kortingspercentage staat bij de prijs */}
+                    {savings && !isPopular && plan.savingsKey !== "s18" && plan.savingsKey !== "s39" && (
                       <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#82F413]/15 text-[#82F413] border border-[#82F413]/25">
                         {savings}
                       </span>
                     )}
                   </div>
+
+                  {/* Oude prijs + kortingsbadge → urgentie */}
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className={`text-base font-semibold line-through ${isPopular ? "text-black/40" : "text-[#64748b]"}`}>
+                      {formatPrice(plan.originalPrice)}
+                    </span>
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-extrabold bg-[#ff3b30] text-white shadow-[0_2px_10px_rgba(255,59,48,0.4)]">
+                      -{discountPct(plan.price, plan.originalPrice)}%
+                    </span>
+                  </div>
+
                   <div className="flex items-baseline gap-1">
                     <span className={`text-5xl font-black tracking-tight ${isPopular ? "text-black" : "text-white"}`}>
-                      €{plan.price.toFixed(2).replace(".", ",")}
+                      {formatPrice(plan.price)}
                     </span>
                   </div>
                   <p className={`text-xs mt-1 ${isPopular ? "text-black/50" : "text-[#475569]"}`}>
@@ -131,9 +152,8 @@ export default function PricingCards() {
                   ))}
                 </ul>
 
-                <Link
-                  href="/inloggen"
-                  className={`
+                {(() => {
+                  const buttonClass = `
                     w-full inline-flex items-center justify-center gap-2.5
                     px-5 py-3.5 rounded-xl text-sm font-bold
                     transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]
@@ -141,11 +161,20 @@ export default function PricingCards() {
                       ? "bg-black text-white hover:bg-[#111111] shadow-[0_4px_20px_rgba(0,0,0,0.4)]"
                       : "bg-[#82F413] text-black hover:bg-[#90ff1a] shadow-[0_0_20px_rgba(130,244,19,0.25)] hover:shadow-[0_0_30px_rgba(130,244,19,0.45)]"
                     }
-                  `}
-                >
-                  <TvIcon dark={isPopular} />
-                  {p.buyNow}
-                </Link>
+                  `;
+                  // Externe betaallink (Hotmart) → nieuw tabblad; anders interne login-pagina
+                  return plan.checkoutUrl ? (
+                    <a href={plan.checkoutUrl} target="_blank" rel="noopener noreferrer" className={buttonClass}>
+                      <TvIcon dark={isPopular} />
+                      {p.buyNow}
+                    </a>
+                  ) : (
+                    <Link href="/inloggen" className={buttonClass}>
+                      <TvIcon dark={isPopular} />
+                      {p.buyNow}
+                    </Link>
+                  );
+                })()}
 
                 <p className={`text-center text-xs mt-2.5 font-medium ${isPopular ? "text-black/60" : "text-[#475569]"}`}>
                   {p.ready}
@@ -160,10 +189,8 @@ export default function PricingCards() {
         <div className="mt-12 text-center">
           <p className="text-sm text-[#475569] mb-3">{p.payWith}</p>
           <div className="flex items-center justify-center gap-3 flex-wrap">
-            {["iDEAL", "Visa", "Mastercard", "PayPal", "Bancontact"].map((method) => (
-              <span key={method} className="px-3 py-1.5 rounded-lg bg-[#0e0e0e] border border-[#1e1e1e] text-xs font-semibold text-[#94a3b8]">
-                {method}
-              </span>
+            {paymentIcons.map(({ name, Icon }) => (
+              <Icon key={name} />
             ))}
           </div>
         </div>

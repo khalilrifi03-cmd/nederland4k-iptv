@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Dashboard — StreamFlow",
-  description: "Beheer jouw StreamFlow abonnement en bekijk jouw watchlist.",
+  title: "Dashboard — Nederland4K IPTV",
+  description: "Beheer jouw Nederland4K IPTV abonnement en bekijk jouw watchlist.",
 };
 
 interface QuickStatItem {
@@ -38,7 +38,7 @@ export default function DashboardPage() {
               Goedemiddag, <span className="text-gradient">Gebruiker</span> 👋
             </h1>
             <p className="text-text-secondary text-sm mt-1">
-              Welkom terug op jouw StreamFlow dashboard
+              Welkom terug op jouw Nederland4K IPTV dashboard
             </p>
           </div>
           <Link

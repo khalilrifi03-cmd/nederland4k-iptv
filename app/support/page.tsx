@@ -1,15 +1,13 @@
 "use client";
 
 import { useTranslations } from "@/lib/i18n";
-
-const WHATSAPP_NUMBER = "31612345678"; // ← vervang door jouw nummer (zonder + of spaties)
-const EMAIL_ADDRESS   = "support@streamflow.nl"; // ← vervang door jouw e-mailadres
+import { whatsappLink } from "@/lib/contact";
 
 export default function SupportPage() {
   const { t } = useTranslations();
+  const s = t.supportPage;
 
-  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}`;
-  const mailUrl     = `mailto:${EMAIL_ADDRESS}`;
+  const whatsappUrl = whatsappLink();
 
   return (
     <main className="min-h-screen flex items-center justify-center px-4 py-32">
@@ -19,21 +17,18 @@ export default function SupportPage() {
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-5 rounded-full border border-[#82F413]/30 bg-[#82F413]/10 text-[#82F413] text-sm font-medium">
             <span className="w-1.5 h-1.5 rounded-full bg-[#82F413] animate-pulse" />
-            Support
+            {s.badge}
           </div>
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4">
-            {t.nav.support}
+            {s.title}
           </h1>
           <p className="text-text-secondary text-lg max-w-md mx-auto leading-relaxed">
-            Na jouw betaling sturen wij jouw toegangsgegevens direct via
-            <strong className="text-text-primary"> WhatsApp</strong> of{" "}
-            <strong className="text-text-primary">e-mail</strong>.
-            Heb je een vraag? Neem gerust contact op.
+            {s.subtitle}
           </p>
         </div>
 
         {/* Contact cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div className="max-w-md mx-auto">
 
           {/* WhatsApp */}
           <a
@@ -50,38 +45,12 @@ export default function SupportPage() {
             </div>
 
             <div className="text-center">
-              <p className="text-lg font-bold text-white mb-1">WhatsApp</p>
+              <p className="text-lg font-bold text-white mb-1">{s.waTitle}</p>
               <p className="text-sm text-text-secondary mb-3">
-                Stuur ons een bericht — wij reageren binnen enkele minuten.
+                {s.waDesc}
               </p>
               <span className="inline-flex items-center gap-1.5 text-[#25D366] text-sm font-semibold group-hover:gap-2.5 transition-all duration-200">
-                Chat starten
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </span>
-            </div>
-          </a>
-
-          {/* Email */}
-          <a
-            href={mailUrl}
-            className="group flex flex-col items-center gap-5 p-8 rounded-2xl border border-[#1e1e3a] bg-[#0f0f1a] hover:border-neon-purple/50 hover:bg-neon-purple/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_40px_rgba(168,85,247,0.15)]"
-          >
-            {/* Email icon */}
-            <div className="w-16 h-16 rounded-2xl bg-neon-purple/15 border border-neon-purple/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <svg viewBox="0 0 24 24" className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" className="stroke-neon-purple" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-              </svg>
-            </div>
-
-            <div className="text-center">
-              <p className="text-lg font-bold text-white mb-1">E-mail</p>
-              <p className="text-sm text-text-secondary mb-3">
-                Stuur ons een e-mail en wij antwoorden zo snel mogelijk.
-              </p>
-              <span className="inline-flex items-center gap-1.5 text-neon-purple text-sm font-semibold group-hover:gap-2.5 transition-all duration-200">
-                Mail sturen
+                {s.waCta}
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
@@ -92,7 +61,7 @@ export default function SupportPage() {
 
         {/* Note */}
         <p className="text-center text-sm text-text-muted mt-8">
-          Na betaling ontvang je jouw gegevens automatisch via WhatsApp of e-mail — geen account aanmaken nodig.
+          {s.note}
         </p>
       </div>
     </main>

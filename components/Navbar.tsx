@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { Home, Tag, LifeBuoy, Sun, Moon, ChevronDown } from "lucide-react";
+import { Home, Tag, BookOpen, LifeBuoy, Sun, Moon, ChevronDown } from "lucide-react";
 import { NavBar } from "@/components/ui/tubelight-navbar";
 import { useTranslations, type Locale } from "@/lib/i18n";
 import { useTheme } from "@/lib/theme";
@@ -97,9 +97,10 @@ export default function Navbar() {
   const { t, locale } = useTranslations();
 
   const navItems = [
-    { name: t.nav.home,    url: "/",         icon: Home     },
-    { name: t.nav.pricing, url: "/tarieven", icon: Tag      },
-    { name: t.nav.support, url: "/support",  icon: LifeBuoy },
+    { name: t.nav.home,    url: "/",            icon: Home     },
+    { name: t.nav.pricing, url: "/tarieven",    icon: Tag      },
+    { name: t.nav.install, url: "/installatie", icon: BookOpen },
+    { name: t.nav.support, url: "/support",     icon: LifeBuoy },
   ];
 
   return (

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Inloggen — StreamFlow",
-  description: "Log in op jouw StreamFlow account en begin direct met streamen.",
+  title: "Inloggen — Nederland4K IPTV",
+  description: "Log in op jouw Nederland4K IPTV account en begin direct met streamen.",
 };
 
 export default function InloggenPage() {
@@ -21,7 +21,7 @@ export default function InloggenPage() {
                 <path d="M8 5v14l11-7z" />
               </svg>
             </div>
-            <span className="text-2xl font-bold text-gradient">StreamFlow</span>
+            <span className="text-2xl font-bold text-gradient">Nederland4K IPTV</span>
           </Link>
           <h1 className="text-2xl font-bold text-text-primary mb-2">Welkom terug</h1>
           <p className="text-text-secondary text-sm">
